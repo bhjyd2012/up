@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hlsfile.mapper.JobInfoMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hlsfile.bean.JobInfo">
+        <id column="id" property="id" />
+        <result column="cid" property="cid" />
+        <result column="province_code" property="provinceCode" />
+        <result column="city_code" property="cityCode" />
+        <result column="title" property="title" />
+        <result column="department" property="department" />
+        <result column="reward_start" property="rewardStart" />
+        <result column="reward_end" property="rewardEnd" />
+        <result column="responsibility" property="responsibility" />
+        <result column="require" property="require" />
+        <result column="education" property="education" />
+        <result column="status" property="status" />
+        <result column="publish_date" property="publishDate" />
+        <result column="workingyears" property="workingyears" />
+        <result column="QR_path" property="qrPath" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, cid, province_code, city_code, title, department, reward_start, reward_end, responsibility, require, education, status, publish_date, workingyears, QR_path
+    </sql>
+
+</mapper>

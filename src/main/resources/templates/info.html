@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>职位详情</title>
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" th:href="@{/images/favicon.png}"/>
+    <!-- All CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" href="css/aos.min.css" th:href="@{/css/aos.min.css}"/>
+    <link rel="stylesheet" href="css/fontawesome-all.min.css" th:href="@{/css/fontawesome-all.min.css}"/>
+    <link rel="stylesheet" href="css/magnific.min.css" th:href="@{/css/magnific.min.css}"/>
+    <link rel="stylesheet" href="css/owl.carousel.min.css" th:href="@{/css/owl.carousel.min.css}"/>
+    <link rel="stylesheet" href="css/select2.min.css" th:href="@{/css/select2.min.css}"/>
+    <link rel="stylesheet" href="css/slimmenu.min.css" th:href="@{/css/slimmenu.min.css}"/>
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/layui.css" th:href="@{/css/layui.css}"/>
+    <link rel="stylesheet" href="css/modules/laydate/laydate.css" th:href="@{/css/modules/laydate/laydate.css}"/>
+    <style type="text/css">
+    	span{margin-left:20px; }
+    	a:hover{color:red;}/* #27AE60 */
+    	::-webkit-scrollbar{width:4px;height: 16px;background-color:#F5F5F5;}
+		/*定义滚动条轨道 内阴影+圆角*/
+		::-webkit-scrollbar-track{-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);border-radius: 10px;background-color: #F5F5F5;}
+		/*定义滑块 内阴影+圆角 background-color: #555;*/
+		::-webkit-scrollbar-thumb{border-radius: 10px;-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);background-color: #555;}
+
+    </style>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> -->
+    <script src="js/modules/jquery-3.4.1.min.js" th:src="@{/js/modules/jquery-3.4.1.min.js}"></script>
+	<script src="js/modules/bootstrap.min.js" th:src="@{/js/modules/bootstrap.min.js}"></script>
+    <script src="js/modules/select2.min.js" th:src="@{/js/modules/select2.min.js}"></script>
+    <script src="js/layui.js" th:src="@{/js/layui.js}"></script>
+	<script src="js/laydate/laydate.js" th:src="@{/js/laydate/laydate.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+	  function goRegister() {
+		  window.location.href=[[${#httpServletRequest.getContextPath()}]]+"/register/goreg?cid="
+				  +[[${cid}]]+
+				  "&jobid="+[[${jobid}]]+
+				  "&source="+[[${source}]]+
+				  "&province="+[[${province}]]+
+				  "&city="+[[${city}]]
+				  ;
+	  } 
+	</script>
+</head>
+   <body>
+      <!--header-start -->
+      <header class="header-area">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-2">
+                  <div class="logo">
+                    <a><img class="img-responsive" src="images/logo.png" alt="image" th:src="@{/images/logo.jpg}" style="width:100px;"/></a>
+                  </div>
+               </div>
+               <div class="col-lg-10">
+                  <div class="header-container d-flex justify-content-between highlight">
+                     <nav class="highlight">
+                        <ul id="responsive-menu" class="slimmenu" style="top:14px;">
+                            <li><a class="nav-link" href="/" th:href="@{/jobInfo/joblist/(cid=${cid!=null?cid:''},jobid=${jobid!=null?jobid:''},source=${source!=null?source:''})}">首页</a></li>
+                           <li class="nav-item"><a class="nav-link" href="about.html" th:href="@{/goabout/(cid=${cid!=null?cid:''},jobid=${jobid!=null?jobid:''},source=${source!=null?source:''})}">关于我们</a></li>
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <!--header-end -->
+      <main class="main-content-area">
+        
+         <!--apps-download-area-start -->
+         <div class="apps-download-area pt-100 pb-100 clearfix" style="padding-top:10px;">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="apps-details-content">
+                        <div class="section-title text-left">
+                           <!-- <span>Search the job from app</span> -->
+                           <h3>职位详情</h3>
+                            <a class="time-btn1 time-btn" href="contact.html" style="margin-left:25%;font-size:16px;float:right;margin-top:-26px;" 
+                            th:href="@{/register/goreg(cid=${jobinfo.cid},jobid=${jobinfo.id},source=${source!=null?source:''},province=${province!=null?province:''},city=${city!=null?city:''})}">投递</a>
+                           <div class="line"></div>
+                        </div>
+						<div style="border: 1px solid #777;background-color:#F6F7F9;">
+						  <p style="margin: 10px 10px;font-size:14px;">
+						  <b>职位:</b><span>[[${jobinfo.title}]]</span>
+						</p>
+                        <p style="margin: 10px 10px;font-size:14px;">
+						  <b>地点:</b><span>[[${jobinfo.cityCode}]]</span>
+						</p>
+                        <p style="margin: 10px 10px;font-size:14px;">
+                          <b>薪资:</b><span>[[${jobinfo.rewardStart!=null?jobinfo.rewardStart+'~'+jobinfo.rewardEnd:'面议'}]]</span>
+                        </p>
+                        <p style="margin: 10px 10px;font-size:14px;">
+						  <b>日期:</b><span>[[${#dates.format(jobinfo.publishDate, 'yyyy年MM月dd日')}]]</span>
+						</p>
+                        <p style="margin: 10px 10px;font-size:14px;">
+						  <b>学历:</b><span>[[${jobinfo.education==0?'不限':jobinfo.education==1?'高中':jobinfo.education==2?'大专':jobinfo.education==3?'本科':jobinfo.education==4?'研究生以上':'高中以下'}]]</span>
+						</p>
+                        <p style="margin: 10px 10px;font-size:14px;">
+						  <b>经验:</b><span>[[${jobinfo.workingyears}]]</span>
+						</p>
+						<p style="margin: 10px 10px;font-size:14px;">
+						  <b>岗位职责:</b>
+						</p>
+						<p style="margin: 10px 10px;font-size:14px;">
+							<!-- <textarea id="reportText" th:text="${jobinfo.responsibility}" style="width:100%;height:50px;border:1px solid #777;overflow-y:scroll;" readonly></textarea> -->
+							<div class="layui-input-block" style="margin: 0px 10px;">
+                              <textarea  class="layui-textarea" th:text="${jobinfo.responsibility}" style="width:100%;height:150px;overflow-y:scroll;overflow-x:hidden;resize:none;" readonly></textarea>
+            				</div>
+						</p>
+                        <p style="margin: 10px 10px;font-size:14px;">
+						  <b>岗位要求:</b>
+						</p>
+                        <p style="margin: 10px 10px;font-size:14px;"><!-- width:100%;height:50px;border:1px solid #777;overflow-y:scroll; -->
+                        	 <!-- <textarea id="reportText" th:text="${jobinfo.require}"  readonly  style="width:100%;height:50px;border:1px solid #777;overflow-y:scroll;"></textarea> -->
+                       	 	<div class="layui-input-block" style="margin-top:0px;margin-bottom:10px;margin-left:10px;margin-right:10px;">
+                              <textarea  class="layui-textarea" th:text="${jobinfo.require}" style="width:100%;height:150px;overflow-y:scroll;overflow-x:hidden;resize:none;" readonly></textarea>
+            				</div>
+                       	 </p>
+                        
+						</div>
+                        <div class="title">
+                                 <h4>
+	                                <!-- <a class="time-btn1 time-btn" href="contact.html" style="margin-left:25%;font-size:26px;" th:href="@{/register/goreg(cid=${jobinfo.cid},jobid=${jobinfo.id})}">投递</a>
+	                                <a class="time-btn1 time-btn" style="margin-left:5%;font-size:26px; cursor:pointer;" onclick="javascrtpt:history.back();">返回</a> -->
+                                 	<button type="button" class="btn-c buttonfx curtainup" onclick="goRegister();" style="float: left;width:30%;margin:5% 10%;">投递</button>
+                                 	<button type="button" class="btn-c buttonfx curtainup" id="" onclick="javascrtpt:history.back();" style="float: left;width:30%;margin:5% 10%;">返回</button>
+                                 </h4>
+                        </div>
+                      
+                     </div>
+                  </div>
+                 
+               </div>
+            </div>
+         </div>
+         <!--apps-download-area-end -->
+        
+        
+      </main>
+      <!--footer-area-start -->
+      <footer>
+        
+         <div class="footer-bottom-area clearfix">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="footer-bottom text-center">
+                       <p>Copyright &copy; 2019.Company HLS All rights reserved.</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!--footer-area-end -->
+      <!-- ==================== START PRELOADER HERE ===================================== -->
+      <div class="preloader" id="preloader">
+         <div class="lds-ripple">
+            <div></div>
+            <div></div>
+         </div>
+      </div>
+      <!-- ==================== END PRELOADER HERE ===================================== -->		
+      <!-- ====================ALL JS FILE HERE===================================== -->
+      <!-- jQuery -->
+	 <script src="js/modules/proper.js" th:src="@{/js/modules/proper.js}"></script>
+	  <script src="js/modules/jquery.waypoints.min.js" th:src="@{/js/modules/jquery.waypoints.min.js}"></script>
+	  <script src="js/modules/owl.carousel.min.js" th:src="@{/js/modules/owl.carousel.min.js}"></script>
+	  <script src="js/modules/magnific.min.js" th:src="@{/js/modules/magnific.min.js}"></script>
+	  <script src="js/modules/typing.min.js" th:src="@{/js/modules/typing.min.js}"></script>
+	  <script src="js/modules/aos.min.js" th:src="@{/js/modules/aos.min.js}"></script>
+	  <script src="js/modules/slimmenu.min.js" th:src="@{/js/modules/slimmenu.min.js}"></script>
+      <script src="js/app.js" th:src="@{/js/app.js}"></script>  
+      <script>
+	    /*  Type js  */
+		if((".typed").length > 0) {
+			var options = {
+				stringsElement: '.typed-strings',
+				typeSpeed: 100,
+				backDelay: 700,
+				loop:!0,
+				startDelay:500,
+				cursorChar: '|',
+			}
+			var typed = new Typed(".typed", options);
+		} 
+	  </script>	  
+	  
+   </body>
+</html>
+

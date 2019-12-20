@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hlsfile.mapper.RegisterMapper">
+
+    <!-- 开启二级缓存 -->
+    <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/> -->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hlsfile.bean.Register">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="age" property="age" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="file" property="file" />
+        <result column="education" property="education" />
+        <result column="date" property="date" />
+        <result column="job_id" property="jobId" />
+        <result column="nation" property="nation" />
+        <result column="school" property="school" />
+        <result column="marriage" property="marriage" />
+        <result column="workingyears" property="workingyears" />
+        <result column="Introduction" property="Introduction" />
+        <result column="major" property="major" />
+        <result column="status" property="status" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="county" property="county" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, sex, age, phone, email, file, education, date, job_id, nation, school, marriage, workingyears, Introduction, major, status, province, city, county    </sql>
+
+</mapper>

@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>首页</title>
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" th:href="@{/images/favicon.png}">
+    <!-- All CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="css/aos.min.css" th:href="@{/css/aos.min.css}"/>
+    <link rel="stylesheet" href="css/fontawesome-all.min.css" th:href="@{/css/fontawesome-all.min.css}"/>
+    <link rel="stylesheet" href="css/magnific.min.css" th:href="@{/css/magnific.min.css}"/>
+    <link rel="stylesheet" href="css/owl.carousel.min.css" th:href="@{/css/owl.carousel.min.css}"/>
+    <link rel="stylesheet" href="css/select2.min.css" th:href="@{/css/select2.min.css}"/>
+    <link rel="stylesheet" href="css/slimmenu.min.css" th:href="@{/css/slimmenu.min.css}"/>
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="css/layui.css" th:href="@{/css/layui.css}"/>
+    <!-- <link rel="stylesheet" href="css/modules/laydate/laydate.css" th:href="@{/css/modules/laydate/laydate.css}"/> -->
+    <link rel="stylesheet" th:href="@{//cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css}"/>
+	<script th:src="@{//cdn.staticfile.org/jquery/2.1.1/jquery.min.js}"></script>
+	<script th:src="@{//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	<!-- <script src="" type="text/javascript" th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
+    <link href="" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
+    <script src="" type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script> -->
+    <!-- Google font -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> -->
+    <style type="text/css">
+    	.slider-area::before {content: "";position:absolute;eft: 0;right: 0;top: 0;bottom: 0;
+	    					  background:rgba(28, 39, 51, 0.60);z-index: 3;}
+	    /*.layui-laypage-btn{border-radius: 4px;border: none;color:#fff;cursor: pointer;background:#27AE60;}*/
+	    .layui-input{height:26px;}
+	    .single-job .logo {width: 130px;float: left;}
+	    .search-bar {background-color:none;}
+	    .slider-wrapper {padding: 5px 0px;}
+	    /* 分页 */
+	    .MainStyle {padding:11px;text-align: center;}
+	    .MainStyle div {display: inline;margin-right: 5px;}
+	    .MainStyle a {padding: 2px 6px;border: 1px #4890cf solid;background:#fff;color:#000;text-decoration:none;}
+	    .MainStyle a:hover {color:#27ae60;}
+	    .SearchStyle input {width: 40px;overflow: visible; margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;vertical-align: middle;}
+        .s1 select {word-wrap: normal;text-transform: none; margin: 0;font-family: inherit;font-size: inherit;line-height: inherit;vertical-align: middle;}
+		.single-job .job-meta {width: calc(100% - 13px);padding-left: 10px;float: left;}
+		textarea{border:none;width:100%;height:200px;overflow:hidden;}
+		.form-row {flex-wrap: inherit;}
+		.job-search-bar .select2-selection--single {margin-right: -5px;}
+		.search-bar {padding: 20px 10px;background-color:#F6F7F9;}
+		.search-bar input[type="search"] {padding: 10px 6px;}
+		.single-job .meta-info {display: inline-flex !important;}
+		.slider-wrapper {padding: 45px 0px;}
+		.pt-100 {padding-top:20px;}
+		.single-job, .single-candidate {margin-bottom: 5px;padding: 0px;}
+		.meta-info p {font-size:13px;margin-right:10px;background-color:#edf9ff;color:#3d9ccc;
+		border: 1px solid #e1f2fa;border-radius: 10px;line-height:16px;margin-bottom:5px; font-family:Microsoft JhengHei;padding: 0px 5px;}
+		.select2-container {width:100% !important;}
+		.select2-container .select2-selection--single .select2-selection__rendered{padding-left:4px;}
+		.select2-container .select2-selection--single {height:26px;}
+		.select2-container--default .select2-selection--single .select2-selection__rendered {line-height:26px;}
+		.select2-container--default .select2-selection--single .select2-selection__arrow {width:10px;}
+		/* .layui-layer-btn .layui-layer-btn0{border-color:#27ae60;background-color:#27ae60;color: red;} */
+		
+    </style>
+	<script src="js/modules/jquery-3.4.1.min.js" th:src="@{/js/modules/jquery-3.4.1.min.js}"></script>
+	<script src="js/modules/bootstrap.min.js" th:src="@{/js/modules/bootstrap.min.js}"></script>
+    <script src="js/modules/select2.min.js" th:src="@{/js/modules/select2.min.js}"></script>
+    <script src="js/layui.js" th:src="@{/js/layui.js}"></script>
+	<!-- <script src="js/laydate/laydate.js" th:src="@{/js/laydate/laydate.js}"></script> -->
+	
+	<script type="text/javascript" th:inline="javascript">
+
+	
+		 layui.use(['element','layer','laydate'], function(){
+			  var element = layui.element;
+			  var layer = layui.layer;
+			  var laydate = layui.laydate;
+			  
+			  //日期插件
+			  laydate.render({
+			    elem: '#startdate'
+			  });
+			  laydate.render({
+			    elem: '#enddate'
+			  });
+			  
+			  //监听折叠
+			  element.on('collapse(test)', function(data){
+			    	layer.msg('展开状态：'+ data.show);
+			  		});
+		   	  });
+			/* layui.use('laydate', function(){
+		  		  var laydate = layui.laydate;
+				  laydate.render({elem: '#startdate'});
+				  laydate.render({elem: '#enddate'});
+		       }); */
+			
+		      
+		       
+		  /*修改下拉框提示*/
+		  $(function(){
+		  	$('select').select2({
+	        //placeholder: "输入姓名查询",
+	        language: "zh-CN",
+			language: {
+				noResults: function(params) {return "未找到";}
+			}
+			});
+		  });
+	  
+          
+		//根据省获取市
+			function getLevel2(obj){
+				/* var level1 = obj.options[obj.selectedIndex].value; */
+				var options = $("#level1 option:selected");
+				var level1= options.val();　　　　　　　　　　　　　　
+				var level2=[[${level2}]]==null?'':[[${level2}]];//获取选中项的值
+				if(level1!=null&&level1!=""){
+					$("#level2").empty();//清除下拉框内容
+					$("#level2").append("<option>城市</option>");//追加第一行值
+					$.ajax({
+			             url:[[${#httpServletRequest.getContextPath()}]]+'/district/level2',
+			             type: 'post',
+			             data:{"levelid":level1},
+			             success: function(data) {
+			            	    //追加值并判断是否被选中
+			            	 	var str;
+				            	$.each(data, function (index, obj) {
+				                	str = "<option value='"+obj.id+"'"
+				                	if(obj.id==level2){
+				                		str+= " selected "
+				                	}
+				                	str += ">"+obj.name+"</option>";
+				                    $("#level2").append(str);
+				                }); 
+			              }
+			           });
+				}
+				   
+			}
+			$(function(){
+	    		/* console.log($("#level1").val())
+	    		console.log([[${level2}]]) */
+	    		//触发城市方法
+	    		$("#level1").val()?getLevel2($("#level1").val()):1==1;
+	    	})    
+		
+		
+			/*go跳转 */
+		    function page_searchIndex(){ 
+		    var pageSize=$("#pageNumber").val();// 新的页面大小
+		  	var searchText = document.getElementById('john_Page_Search');
+		  	  var searchIndex = searchText!=null&&searchText.value!=''?parseInt(searchText.value):0; 
+		  	  if(searchIndex > 0 && searchIndex <=[[${pager.pageCount}]]) { 
+		  		  window.location=[[${#httpServletRequest.getContextPath()}]]+"/jobInfo/joblist/?index="
+		  				  +searchIndex
+		  				  +"&size="+pageSize
+		  				  +"&title="+[[${query.title}]]
+		  				  +"&level1="+[[${query.level1}]]
+		  				  +"&level2="+[[${query.level2}]]
+		  				  +"&cid="+[[${query.cid}]]
+		  				  +"&startDate="+[[${query.startDate}]]
+		  				  +"&endDate="+[[${query.endDate}]]
+		  				  +"&source="+[[${query.source}]];  
+		  		  }else{            
+		  			layer.alert('跳转页码超出范围！',{icon:5});
+		  		}    
+		  	  }
+ 	   
+			
+		    /* 展示条数 */
+			function chagePageSize(pageIndex){
+				var pageSize=$("#pageNumber").val();// 新的页面大小
+				window.location=[[${#httpServletRequest.getContextPath()}]]+"/jobInfo/joblist/?index="
+				+[[${pager.pageIndex}]]
+				+"&size="+pageSize
+				+"&title="+[[${query.title!='null'?query.title:''}]]
+				+"&level1="+[[${query.level1}]]
+				+"&level2="+[[${query.level2}]]
+				+"&cid="+[[${query.cid}]]
+				+"&startDate="+[[${query.startDate}]]
+				+"&endDate="+[[${query.endDate}]]
+				+"&source="+[[${query.source}]]; 
+			}
+	
+			 
+	</script>
+     <!-- <script type="text/javascript">
+	    	$(function(){
+	    		/* console.log($("#level1").val())
+	    		console.log([[${level2}]]) */
+	    		//触发城市方法
+	    		$("#level1").val()?getLevel2($("#level1").val()):1==1;
+	    	})
+						    	
+	</script> -->
+	  
+	 
+</head>
+   <body>
+      <!--header-start -->
+      <header class="header-area">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-2">
+                  <div class="logo">
+                     <a><img class="img-responsive" src="images/logo.png" alt="image" th:src="@{/images/logo.jpg}" style="width:100px;"/></a>
+                  </div>
+               </div>
+               <div class="col-lg-10">
+                  <div class="header-container d-flex justify-content-between highlight">
+                     <nav class="highlight">
+                        <ul id="responsive-menu" class="slimmenu" style="top:14px;">
+                           <li><a class="nav-link" href="/" th:href="@{/jobInfo/joblist/(cid=${cid!=null?cid:''},jobid=${jobid!=null?jobid:''},source=${source!=null?source:''})}">首页</a></li>
+                           <li class="nav-item"><a class="nav-link" href="about.html" th:href="@{/goabout/(cid=${cid!=null?cid:''},jobid=${jobid!=null?jobid:''},source=${source!=null?source:''})}">关于我们</a></li>
+                           <!--<li class="nav-item"><a href="contact.html">联系我们</a></li>-->
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <!--header-end -->
+      <main class="main-content-area">
+         <!--slider-start -->
+         <div class="slider-area clearfix" style="background:none;">
+            <div class="container">
+			  <div id="myCarousel" class="carousel slide" data-interval="5000" data-ride="carousel">
+				    <!-- 轮播（Carousel）指标 -->
+				    <!-- <ol class="carousel-indicators">
+				        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				        <li data-target="#myCarousel" data-slide-to="1"></li>
+				        <li data-target="#myCarousel" data-slide-to="2"></li>
+				    </ol>   --> 
+				    <!-- 轮播（Carousel）项目 -->
+				    <div class="carousel-inner">
+				        <div class="item active">
+				            <img src="/wp-content/uploads/2014/07/slide1.png" th:src="@{/images/banner1.png}" alt="">
+				        </div>
+				        <div class="item">
+				            <img src="/wp-content/uploads/2014/07/slide2.png" th:src="@{/images/banner2.png}" alt="">
+				        </div>
+				        <div class="item">
+				            <img src="/wp-content/uploads/2014/07/slide3.png" th:src="@{/images/banner3.png}" alt="">
+				        </div>
+				    </div>
+				    <!-- 轮播（Carousel）导航 -->
+				    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+				        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				        <span class="sr-only">Previous</span>
+				    </a>
+				    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+				        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				        <span class="sr-only">Next</span>
+				    </a>
+				</div>
+
+            </div>
+         </div>
+         
+         <!--slider-end -->
+
+         <!--job-post-area-start -->
+         <div class="job-post-area pt-100 bg-color2 pb-100 minus-15 clearfix">
+            <div class="container">
+              
+               <div class="row">
+                  <div class="col-lg-12 col-md-12" id="jobs">
+                  
+                     <div class="job-post-list" >
+                     <div class="single-job d-md-flex" data-aos="fade-left" style="padding:5px 5px;">
+               				<!-- th:onmouseover="getLevel1();" -->
+					   <form id="getform" method="post" th:action="@{/jobInfo/joblist/(index=1,size=10)}" style="width:100%;" >
+					      <input type="hidden"  name="source" value="" th:value="${query.source}"/>		
+						  <div class="layui-form-item" style="margin-bottom:0px;">
+    						<div class="layui-input-inline" style="margin: 0px 5px;width:20%;float:left;margin-right:2px;">
+						      <input type="text" name="title" lay-verify="title" autocomplete="off" 
+						      placeholder="职位搜索" class="layui-input" style="border-radius:5px;padding-left:3px;" th:value="${query!=null?(query.title!='null'?query.title:''):''}">
+						   </div>
+						   <!-- 全国扫码进入 -->
+						   <div class="layui-input-inline" style="margin:0px 2px;width:20%;float:left;" th:if="${source==null}">
+						   	 <select  name="cid"  id="">
+						        <option selected value="null">公司</option><!-- th:selected="${mkt.id+'' eq query.level1}"  -->
+						        <option th:each="dpt:${cids}"  
+						        th:text="${dpt!=null?dpt.localName:''}" 
+						        th:selected="${dpt.localId+'' eq query.cid}"
+						        th:value="${dpt!=null?dpt.localId:''}" >上海</option>
+						      </select>
+						   </div>
+						    <div class="layui-input-inline" style="margin: 0px 2px;width:20%;float: left;" th:if="${source==null}">
+						      <select  name="level1" th:onchange="getLevel2(this);" id="level1">
+						        <option selected>省份</option><!-- th:selected="${mkt.id+'' eq query.level1}"  -->
+						        <option th:each="mkt:${level1}"  
+						        th:text="${mkt!=null?mkt.name:''}" 
+						        th:selected="${mkt.id+'' eq query.level1}"
+						        th:value="${mkt!=null?mkt.id:''}" >上海</option>
+						      </select>
+						    </div>
+						    <div class="layui-input-inline" style="margin: 0px 2px;width:20%;float:left;" th:if="${source==null}">
+						      <select name="level2" id="level2">
+						       <option disabled selected>城市</option>
+						      </select>
+						    </div>
+						    
+						    <!-- 地区扫码进入-->
+                           <!-- <div class="layui-input-inline" style="margin: 0px 2px;float: left;" th:if="${source!=null}">
+						        <input type="hidden"  name="cid" value="" th:value="${query.cid}"/>
+						   </div> -->
+						   <div class="layui-input-inline" style="margin:0px 2px;width:20%;float:left;" th:if="${source!=null}">
+						   	 <select  name="cid"  id="">
+						        <option th:text="${localname!=null?localname:''}" th:value="${query.cid!=null?query.cid:''}" >上海</option>
+						      </select>
+						   </div>						  
+						    <div class="layui-input-inline" style="margin: 0px 2px;width:20%;float: left;" th:if="${source!=null}">
+						      <select  name="level1" th:onchange="getLevel2(this);" id="level1">
+						        <option selected>省份</option><!-- th:selected="${mkt.id+'' eq query.level1}"  -->
+						        <option th:each="mkt:${level1}"  
+						        th:text="${mkt!=null?mkt.name:''}" 
+						        th:selected="${mkt.id+'' eq query.level1}"
+						        th:value="${mkt!=null?mkt.id:''}" >上海</option>
+						      </select>
+						    </div>
+						    <div class="layui-input-inline" style="margin: 0px 2px;width:20%;float:left;" th:if="${source!=null}">
+						      <select name="level2" id="level2">
+						       <option disabled selected>城市</option>
+						      </select>
+						    </div>
+						    
+						    <div class="layui-input-inline" style="margin: 0px 2px;width:13%;float:left;">
+						     <button type="submit" class="layui-btn" style="padding:0px 5px;height:26px;line-height:26px;background-color:#27AE60;border-radius:5px;width:100%">搜索</button>
+						    </div>
+						  </div>
+                          
+						
+					   </form>
+			
+			  
+                     </div>
+                         <!-- data-aos="fade-left" 滑入 -->
+                        <div class="single-job d-md-flex" th:each="jobs:${pager.records}">
+                           <!-- <div class="logo">
+                              <a href="#"><img src="images/logo-2.png" alt="image" th:src="@{/images/logo-2.png}"/></a>
+                           </div> -->
+                          
+                           <div class="job-meta">
+                              <div class="title">
+                                 <h4 style="">
+	                                 <a th:text="${jobs.title}" th:href="@{/jobInfo/goinfo(cid=${jobs.cid},jobid=${jobs.id},cityCode=${jobs.cityCode},title=${jobs.title})}" style="font-size:17px;color:#3d9ccc;">职位</a>
+	                                 <!-- <a class="time-btn1 time-btn" href="contact.html" style="margin-left: 10px;float:right;" th:href="@{/register/goreg(cid=${jobs.cid},jobid=${jobs.id})}">投递</a> -->
+	                                 <a class="time-btn1 time-btn" href="" style="margin-left: 10px;float:right;margin-top: 0px;padding:0px 5px;text-decoration:none;" 
+	                                 th:href="@{/jobInfo/goinfo(cid=${jobs.cid},jobid=${jobs.id},cityCode=${jobs.cityCode},title=${jobs.title},source=${source},province=${query.level1},city=${query.level2})}">详情</a>
+                                 </h4>
+                                 <div style="margin-top:-26px;margin-left:60%;color:#f60;padding-bottom:2px;font-size:14px;" >
+                                 	<p th:text="${jobs.cityCode}">地点</p>
+                                 </div>
+                                 
+                              </div>
+                              <div class="meta-info d-flex">
+                                <!--  <i class="fa fa-briefcase" aria-hidden="true" style="margin-top:6px;"></i><p th:text="${'薪资:'+jobs.rewardStart+'~'+jobs.rewardEnd+'元'}" >薪资</p>
+                                 <i class="fa fa-map-marker" aria-hidden="true" style="margin-top:6px;"></i><p th:text="${'发布日期:'+#dates.format(jobs.publishDate, 'yyyy年MM月dd日')}">发布时间</p>
+                                 fa fa-briefcase
+                                 <i class="fa fa-calendar" aria-hidden="true" style="margin-top: 6px;"></i><p th:text="${'所属公司:'+jobs.cid}">公司</p> -->
+                                 <p th:text="${jobs.rewardStart!=null?jobs.rewardStart+'~'+jobs.rewardEnd:'面议'}" style="">薪资</p>
+                                 <p th:text="${jobs.education==0?'不限':jobs.education==1?'高中':jobs.education==2?'大专':jobs.education==3?'本科':jobs.education==4?'研究生以上':'高中以下'}" style="" >学历</p>
+                                 <p th:text="${jobs.workingyears}" style="">经验</p>
+                                                         
+                              </div>
+                             </div> 
+                           </div>
+                       
+                        
+                        <!-- 分页 -->
+                        <div class='MainStyle' >
+
+                               <!-- 首页 -->
+					          <div style="margin-top:5px;">
+					          <a href='' target='_self'  style="border-radius:5px;border: 1px #27ae60 solid;"
+					          th:href="@{/jobInfo/joblist(index=1,size=${pager.pageSize},title=${query.title},level1=${query.level1},level2=${query.level2},cid=${query.cid},startDate=${query.startDate},endDate=${query.endDate},source=${source})}">首页</a>
+					          </div>
+					          <!-- 上一页 -->
+					          <div th:if="${pager.pageIndex>1}" style="margin-top:5px;">
+					          <a href='javascript:void(0)' target='_self' style="border-radius:5px;border: 1px #27ae60 solid;"
+					          th:href="@{/jobInfo/joblist(index=${pager.pageIndex-1},size=${pager.pageSize},title=${query.title},level1=${query.level1},level2=${query.level2},cid=${query.cid},startDate=${query.startDate},endDate=${query.endDate},source=${source})}">上一页</a>
+					          </div>
+					          <!-- 页码 -->
+					          <div th:each="num:${pager.numbers}" style="margin-top:5px;">
+					          <a target='_self' style="color:red;cursor:pointer;border-radius:5px;border: 1px red solid;" 
+					          th:if="${num==pager.pageIndex}" th:text="${num}">1</a>
+					          <a href='' target='_self'  
+					          th:if="${num!=pager.pageIndex}" th:text="${num}" style="border-radius:5px;border: 1px #27ae60 solid;"
+					          th:href="@{/jobInfo/joblist(index=${num},size=${pager.pageSize},title=${query.title},level1=${query.level1},level2=${query.level2},cid=${query.cid},startDate=${query.startDate},endDate=${query.endDate},source=${source})}">1</a>
+					          </div>
+					          <!-- 下一页 -->
+					          <div th:if="${pager.pageIndex<pager.pageCount}" style="margin-top:5px;">
+					          <a href='' target='_self' style="border-radius:5px;border: 1px #27ae60 solid;"
+					          th:href="@{/jobInfo/joblist(index=${pager.pageIndex+1},size=${pager.pageSize},title=${query.title},level1=${query.level1},level2=${query.level2},cid=${query.cid},startDate=${query.startDate},endDate=${query.endDate},source=${source})}">下一页</a>
+					          </div>
+					          <!-- 末页 -->
+					          <div style="margin-top:5px;">
+					          <a href='' target='_self' style="border-radius:5px;border: 1px #27ae60 solid;"
+					          th:href="@{/jobInfo/joblist(index=${pager.pageCount},size=${pager.pageSize},title=${query.title},level1=${query.level1},level2=${query.level2},cid=${query.cid},startDate=${query.startDate},endDate=${query.endDate},source=${source})}">尾页</a>
+					          </div>
+                              <p></p>
+					          <!-- 总页数 -->
+					          <div style="font-size:16px;margin-right:10px;">
+					          <!-- 共<b th:text="${pager.totalCount}">44</b>条, <div><b th:text="${pager.pageCount}">20</b>页</div>-->
+					          <span th:text="${'共'+pager.pageCount+'页'}" >20</span>
+					          </div>
+					 		  <!-- 跳转 -->
+					          <div class='SearchStyle' style="margin-top:10px;margin-right:0px;">
+					          <input class="layui-input" type='text' id='john_Page_Search' style="display:inline;padding-left:5px;border-radius:5px;height:28px;border-color:#aaaaaa;"/>
+					          <button class="btn-c buttonfx curtainup" type='button' onclick="page_searchIndex();" style="width:40px;padding-top:3px;padding-bottom:3px;color:white;">跳转</button>
+					          </div>
+					          <!-- <div><input type='button' value='跳转' onclick="page_searchIndex();" style="margin-top:10px;"/></div> -->
+					          <!-- 选页码 -->
+					          <div class="layui-input-inline" style="width:45px;display:inline-block;margin-top:5px;height:31px;">
+				          	  <select id="pageNumber" th:onchange="|chagePageSize(${pager.pageIndex});|">
+							   <option value="5" th:selected="${pager.pageSize eq 5}">5</option>
+							   <option value="10" th:selected="${pager.pageSize eq 10}">10</option>
+							   <option value="15" th:selected="${pager.pageSize eq 15}">15</option>
+							   <option value="20" th:selected="${pager.pageSize eq 20}">20</option>
+							   <option value="30" th:selected="${pager.pageSize eq 30}">30</option>
+							   <option value="40" th:selected="${pager.pageSize eq 40}">40</option>
+							   <option value="50" th:selected="${pager.pageSize eq 50}">50</option>
+							   <option value="70" th:selected="${pager.pageSize eq 70}">70</option>
+				              </select>                   
+				              </div>
+
+					          
+				         </div>
+                        
+                        
+                        
+                        
+                     </div>
+                     
+                     
+                  </div>
+                  
+                  
+                  
+                 
+               </div>
+              
+  
+            </div>
+         </div>
+         
+         <!--job-post-area-end -->
+        
+        
+        
+        
+      </main>
+      <!--footer-area-start -->
+      <footer>
+  
+         <div class="footer-bottom-area clearfix">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="footer-bottom text-center">
+                        <p>Copyright &copy; 2019.Company HLS All rights reserved.</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!--footer-area-end -->
+      <!-- ==================== START PRELOADER HERE ===================================== -->
+      <div class="preloader" id="preloader">
+         <div class="lds-ripple">
+            <div></div>
+            <div></div>
+         </div>
+      </div>
+      <!-- ==================== END PRELOADER HERE ===================================== -->		
+      <!-- ====================ALL JS FILE HERE===================================== -->
+      <!-- jQuery -->
+	  
+	  
+	  <script src="js/modules/proper.js" th:src="@{/js/modules/proper.js}"></script>
+	  <script src="js/modules/jquery.waypoints.min.js" th:src="@{/js/modules/jquery.waypoints.min.js}"></script>
+	  <script src="js/modules/owl.carousel.min.js" th:src="@{/js/modules/owl.carousel.min.js}"></script>
+	  <script src="js/modules/magnific.min.js" th:src="@{/js/modules/magnific.min.js}"></script>
+	  <script src="js/modules/typing.min.js" th:src="@{/js/modules/typing.min.js}"></script>
+	  <script src="js/modules/aos.min.js" th:src="@{/js/modules/aos.min.js}"></script>
+	  <script src="js/modules/slimmenu.min.js" th:src="@{/js/modules/slimmenu.min.js}"></script>
+      <script src="js/app.js" th:src="@{/js/app.js}"></script>  
+       <script>
+        AOS.refresh();
+	    /*  Type js  */
+		if((".typed").length > 0) {
+			var options = {
+				stringsElement: '.typed-strings',
+				typeSpeed: 100,
+				backDelay: 700,
+				loop:!0,
+				startDelay:500,
+				cursorChar: '|',
+			}
+			var typed = new Typed(".typed", options);
+		}
+	  </script>	  
+     
+   </body>
+</html>
+

@@ -1,0 +1,567 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- ,maximum-scale=1,user-scalable=no -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>提交信息</title>
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" th:href="@{/images/favicon.png}">
+    <!-- All CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="css/aos.min.css" th:href="@{/css/aos.min.css}">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css" th:href="@{/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" href="css/magnific.min.css" th:href="@{/css/magnific.min.css}">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" href="css/select2.min.css" th:href="@{/css/select2.min.css}">
+    <link rel="stylesheet" href="css/slimmenu.min.css" th:href="@{/css/slimmenu.min.css}">
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="css/layui.css" th:href="@{/css/layui.css}"/>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <style type="text/css">
+    	 input{margin-top:5px;}
+    	.layui-btn {line-height: 22px;}
+    	.layui-upload-choose {padding: 0 10px;color:red;font-size: 26px;vertical-align:bottom;}
+    	/*.col-md-6 {max-width: 51%;}*/
+    	.select2-container .select2-selection--single .select2-selection__rendered {padding-left:12px;color: #777;}
+    	.comment-form button, .contact-form button {padding: 10px 10px;}
+    	.layui-layer-btn .layui-layer-btn0 {border-color:#27ae60;background-color:#27ae60;color:white;}
+    	.input-group {width: 100%;}
+    	.pb-100 {padding-bottom: 25%;}
+    	.select2-container .select2-selection--single {height:31px;}
+    	.comment-form-area .comment-form input[type="text"],
+    	 .comment-form-area .contact-form input[type="text"], 
+    	 .main-content-area .comment-form input[type="text"], 
+    	 .main-content-area .contact-form input[type="text"] {padding: .375rem .6rem .375rem .6rem;}
+    	 .input-group > .custom-select:not(:last-child), .input-group > .form-control:not(:last-child) {
+    		border-top-right-radius:5px;border-bottom-right-radius:5px;margin-right:10px;}
+   		 .layui-layer-content{color:red;}
+   		  
+   		 /*  *{margin:0;padding:0;}
+    	  a{text-decoration: none;} */
+    	  img{max-width: 100%;height:auto;}
+    	  .weixin-tip{display: none;position: fixed;left:0;top:0;bottom:0;background: rgba(51,51,51,1);filter:alpha(opacity=80);height:100%;width:100%;z-index:100;}
+    	  .weixin-tip p{text-align: center;}
+      </style>
+   	  <script src="js/modules/jquery-3.4.1.min.js" th:src="@{/js/modules/jquery-3.4.1.min.js}"></script>
+	  <script src="js/modules/bootstrap.min.js" th:src="@{/js/modules/bootstrap.min.js}"></script>
+      <script src="js/layui.js" th:src="@{/js/layui.js}"></script>
+      <script type="text/javascript" th:inline="javascript">
+      
+      $(function(){
+      	$("#name").css({"border":"1px solid red"});
+      	$("#age").css({"border":"1px solid red"});
+      	$(".select2-container--default .select2-selection--single:eq(0)").css({"border":"1px solid red"});
+      	$("#school").css({"border":"1px solid red"});
+      	$("#phone").css({"border":"1px solid red"});
+      	$("#location").css({"border":"1px solid red"});
+      	/* .text("**红框为必输项!") */
+        $("#s1").text("**").css({"color":"red","font-size":"26px"});
+        $("#p1").text("红框为必填项!").css({"color":"red","margin-top":"-30px","margin-left":"22px"});
+  	});
+      
+       /* layui初始化 */
+       layui.use('layer', function(){
+    	  var layer = layui.layer;
+       }); 
+      	
+      	/*提交表单*/
+      	function addInfo(){
+      		var name = $("#name").val();
+         	var age = $("#age").val();
+         	var sex = $("#sex").val();
+            var school = $("#school").val();
+            var phone = $("#phone").val();
+            var email = $("#email").val();
+            var file = $("#upfile").val();
+            /* 条件限定 */
+            if(typeof file == "undefined" || file == null || file == ""){
+            	  layer.alert("附件简历不能为空!",{icon:5});
+            	  $("#location").css({"border-color":"red"});
+          	      $("#location").attr('placeholder','请选择附件简历!');
+            	  return;
+             }else{
+            	  $("#location").css({"border-color":"#D9D9D9"});
+             }
+              var fileSize = $("#upfile")[0].files[0].size/(1024*1024);
+              if(fileSize>10){
+            	  $("#location").css({"border-color":"red"});
+              	  layer.alert("上传附件大小不能超过10MB!");
+                  return;
+              }
+              function getFileSuffix(o){
+            	    var pos=o.lastIndexOf(".");
+            	    return o.substring(pos+1);  
+               }
+              var fileSuffix = getFileSuffix(file).toLowerCase();
+              //alert(fileSuffix.toLowerCase());
+              //alert(fileSuffix==="mov");
+              if(fileSuffix=="avi" ||
+                 fileSuffix=="wmv" || 
+                 fileSuffix=="mkv" || 
+                 fileSuffix=="mp4" || 
+                 fileSuffix=="mov" || 
+                 fileSuffix=="rm"  ||
+                 fileSuffix=="3gp" ||
+                 fileSuffix=="flv" ||
+                 fileSuffix=="mpg" ||
+                 fileSuffix=="rmvb"){
+            	  $("#location").css({"border-color":"red"});
+            	  layer.alert("上传附件不能为视频!");
+            	  return;
+              }
+              
+              
+            if(typeof name == "undefined" || name == null || name == ""){
+          	  layer.alert("名字不能为空!",{icon:5});
+          	  $("#name").css({"border-color":"red"});
+          	  $("#name").attr('placeholder','请输入姓名!');
+          	  return;
+            } else{
+          	  $("#name").css({"border-color":"#D9D9D9"});
+            }
+            if(typeof age == "undefined" || age == null || age == ""){
+            	layer.alert("年龄不能为空!",{icon:5});
+            	  $("#age").css({"border-color":"red"});
+            	  $("#age").attr('placeholder','请输入合法年龄!');
+              return;
+            }else{
+            	if(age<=0 || age>=100 || isNaN(age)==true){
+            		layer.alert("年龄不合法,请输入合法年龄!",{icon:5});
+            		$("#age").css({"border-color":"red"});
+              	    $("#age").attr('placeholder','请输入合法年龄!');
+            	  return;
+               }
+          	  $("#age").css({"border-color":"#D9D9D9"});
+            }
+            if(typeof sex == "undefined" || sex == null || sex == ""){
+            	  layer.alert("性别不能为空!",{icon:5});
+            	  /* $("#s1").css({"border":"1px solid red"}); */
+            	  $(".select2-container--default .select2-selection--single:eq(0)").css({"border":"1px solid red"});
+            	  return;
+              }else{
+            	  $(".select2-container--default .select2-selection--single").css({"border":"1px solid #D9D9D9"});
+              }
+            if(typeof school == "undefined" || school == null || school == ""){
+            	  layer.alert("学校不能为空!",{icon:5});
+            	  $("#school").css({"border-color":"red"});
+            	  $("#school").attr('placeholder','请输入学校!');
+            	  return;
+              } else{
+            	  $("#school").css({"border-color":"#D9D9D9"});
+              }
+            if(typeof phone == "undefined" || phone == null || phone == ""){
+            	  layer.alert("手机号不能为空!",{icon:5});
+            	  $("#phone").css({"border-color":"red"});
+            	  $("#phone").attr('placeholder','请输入手机号!');
+            	  return;
+              } else{
+            	  if(!checkPhone(phone)){
+            		  layer.alert("手机号格式不对!",{icon:5});
+                	  $("#phone").css({"border-color":"red"});
+                	  $("#phone").attr('placeholder','请输入手机号!');
+                	  return;
+            	  }
+            	  $("#phone").css({"border-color":"#D9D9D9"});
+            	  
+              }
+              
+           /*  function is_neizhi() {    
+            	var ua = navigator.userAgent.toLowerCase();    
+            	if (ua.match(/MicroMessenger/i) == "micromessenger") {        
+            		return "weixin";    
+            		} else if (ua.match(/QQ/i) == "qq") {        
+            			return "QQ";    
+            		} else if (ua.match(/Alipay/i) == "alipay" && payway == 2) {
+            			return "alipay";    
+            		}    
+            			return false;
+            	}
+            var isNeihi = is_neizhi();
+            if(isNeihi==false){
+            	alert("false");
+            } */
+            /* if(typeof email == "undefined" || email == null || email == ""){
+          	  layer.alert("邮箱不能为空",{icon:5});
+          	  $("#email").css({"border-color":"red"});
+          	  $("#email").attr('placeholder','请输入邮箱!');
+          	  return;
+            } else{
+            	if(!checkEmail(email)){
+            		layer.alert("邮箱格式不对!",{icon:5});
+            		$("#email").css({"border-color":"red"});
+                	$("#email").attr('placeholder','请输入邮箱!');
+                	return;
+            	}
+        		$("#email").css({"border-color":"#D9D9D9"});
+            } */
+            
+      		//alert("提交表单"); $('#addinfoform').serialize() 
+      		var formData = new FormData($("[name='addinfoform']")[0]);
+      		formData.append('upfile', $("#upfile")[0].files[0]);
+      		$.ajax({
+	             url:[[${#httpServletRequest.getContextPath()}]]+'/register/add',
+	             type: 'post',
+	             data:formData,
+	             async:false,
+				 cache: false, 
+	             contentType: false, 
+	             processData: false,
+	             success: function(data) {
+	            	 if(data.code=="100"){
+	            		/*  layer.alert(data.message,{icon:6},time:10000);*/
+	            		 /* $("#p1").text(" ");
+            	         $("#s1").text(" "); */
+	            		 layer.open({title: '提示', icon:'6', content:data.message,time:10000,end:function(){
+	            			  parent.layer.closeAll();
+	            			 window.location.href=[[${#httpServletRequest.getContextPath()}]]+"/jobInfo/joblist?cid="+[[${cid}]]+"&jobid="+[[${jobid}]]+"&source="+[[${source}]];
+	            		  }});
+	            	 }else{ 
+	            		 layer.alert(data.message,{icon:5}); 
+	            	 }
+	             },
+	             error: function(data){
+	            	 layer.alert("提交错误",{icon:5});
+	             }
+	              
+	           });
+      		
+      	}
+      	/* 验证邮箱 */
+      	function checkEmail(str){
+      	   var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+	      	if(re.test(str)){
+	      	return true;
+	      	}else{
+	      	return false;
+	      	}
+      	}
+      	/* 验证手机号 */
+      	function checkPhone(str){ 
+    		var re = /^1[3456789]\d{9}$/
+   	      	if(re.test(str)){
+   	      	return true;
+   	      	}else{
+   	      	return false;
+   	      	}
+      	}
+      	
+      	
+      	
+      	function yanzheng(){
+            sendyzm($("#second"));
+        }
+      	
+        //用ajax提交到后台的发送短信接口
+        function sendyzm(obj){
+            var email = $("#email").val();
+                $.ajax({
+                    url:[[${#httpServletRequest.getContextPath()}]]+'/register/sendemail',
+                    data:{"email":email},
+                    dataType:"json",
+                    type:"post",
+                    async : false,
+                    cache : false,
+                    success:function(res){
+                        $("#yzms").val(res.extend.yzms);
+                    },
+                    error:function(){
+                        alert("验证码发送失败");
+                    }
+                });
+                setTime(obj);//开始倒计时
+         
+        }
+ 
+        //60s倒计时实现逻辑
+        var countdown = 60;
+        function setTime(obj) {
+            if (countdown == 0) {
+                obj.prop('disabled', false);
+                obj.text("点击获取验证码");
+                countdown = 60;//60秒过后button上的文字初始化,计时器初始化;
+                return;
+            } else {
+                obj.prop('disabled', true);
+                obj.text("("+countdown+"s)后重新发送") ;
+                countdown--;
+            }
+            setTimeout(function() { setTime(obj) },1000) //每1000毫秒执行一次
+        }
+
+      
+	    //上传附件点击事件
+	    function onClick(){
+            $('#upfile').click();
+	    }
+	    
+
+		//根据省获取市
+		function getLevel2(obj){
+			/* var level1 = obj.options[obj.selectedIndex].value; */
+			var options = $("#level1 option:selected");
+			var level1= options.val();　　　　　　　　　　　　　　
+			var level2=[[${level2}]]==null?'':[[${level2}]];//获取选中项的值
+			if(level1!=null&&level1!=""){
+				$("#level2").empty();//清除下拉框内容
+				$("#level2").append("<option selected>城市</option>");//追加第一行值
+				$.ajax({
+		             url:[[${#httpServletRequest.getContextPath()}]]+'/district/level2',
+		             type: 'post',
+		             data:{"levelid":level1},
+		             success: function(data) {
+		            	    //追加值并判断是否被选中
+		            	 	 var str;
+			            	$.each(data, function (index, obj) {
+			                	str = "<option value='"+obj.id+"'"
+			                	if(obj.id==level2){
+			                		str+= " selected "
+			                	}
+			                	str += ">"+obj.name+"</option>";
+			                    $("#level2").append(str);
+			                });
+		              }
+		           });
+			}
+			   
+		}
+		$(function(){
+    		/* console.log($("#level1").val())
+    		console.log([[${level2}]]) */
+    		//触发城市方法
+    		$("#level1").val()?getLevel2($("#level1").val()):1==1;
+    	})    
+
+	    //根据市获取区县
+		function getLevel3(obj){
+			/* var level1 = obj.options[obj.selectedIndex].value; */
+			var options = $("#level2 option:selected");
+			var level2= options.val();　　　　　　　　　　　　　　
+			var level3=[[${level3}]]==null?'':[[${level3}]];//获取选中项的值
+			if(level2!=null&&level2!=""){
+				$("#level3").empty();//清除下拉框内容
+				$("#level3").append("<option selected>区县</option>");//追加第一行值
+				$.ajax({
+		             url:[[${#httpServletRequest.getContextPath()}]]+'/district/level3',
+		             type: 'post',
+		             data:{"levelid":level2},
+		             success: function(data) {
+		            	    //追加值并判断是否被选中
+		            	 	 var str;
+			            	$.each(data, function (index, obj) {
+			                	str = "<option value='"+obj.id+"'"
+			                	if(obj.id==level3){
+			                		str+= " selected "
+			                	}
+			                	str += ">"+obj.name+"</option>";
+			                    $("#level3").append(str);
+			                });
+		              }
+		           });
+			}
+			   
+		}
+		$(function(){
+    		//触发区县方法
+    		$("#level2").val()?getLevel3($("#level2").val()):1==1;
+    	}) 
+	    
+	    
+    	//判断是否在微信中,在微信中提示去浏览器打开
+    	$(window).on("load",function(){
+	        var winheight = $(window).height();
+	        var winwidth = $(window).width();
+	        function is_weixin() {
+	            var ua = navigator.userAgent.toLowerCase();
+	            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+	                return "wx";
+	            }else if (ua.match(/QQ/i) == "qq") {        
+	    			return "qq";    
+	    		} else if (ua.match(/Alipay/i) == "alipay" && payway == 2) {
+	    			return "al";    
+	    		}  else {
+	                return false;
+	            }
+	        }
+	        var isWeixin = is_weixin();
+	        if(isWeixin!="wx"||isWeixin!="qq"||isWeixin!="al"){
+	            //$(".weixin-tip").css("width",winwidth);
+	            $(".weixin-tip").css("height",winheight);
+	            $(".weixin-tip").show();
+	        }
+     	})
+    	
+      </script>
+      
+    
+</head>
+   <body>
+      <!--header-start -->
+      <header class="header-area">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-2">
+                  <div class="logo">
+                     <a><img class="img-responsive" src="images/logo.png" alt="image"  th:src="@{/images/logo.jpg}" style="width:100px;"/></a>
+                  </div>
+               </div>
+               <div class="col-lg-10">
+                  <div class="header-container d-flex justify-content-between highlight">
+                     <nav class="highlight">
+                        <ul id="responsive-menu" class="slimmenu" style="top:14px;">
+                           <li><a class="nav-link" href="index.html" th:href="@{/jobInfo/joblist/(cid=${cid!=null?cid:''},jobid=${jobid!=null?jobid:''},source=${source!=null?source:''})}">首页</a></li>
+                           <li class="nav-item"><a class="nav-link" href="about.html" th:href="@{/goabout/(cid=${cid!=null?cid:''},jobid=${jobid!=null?jobid:''},source=${source!=null?source:''})}">关于我们</a></li>
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </header>
+      <!--header-end -->
+    <main class="main-content-area">
+        <!-- 微信打开遮光罩 -->
+        <div class="weixin-tip">
+		    <p><img src="images/live_weixin.jpg" th:src="@{/images/live_weixin.jpg}" alt="选择浏览器打开"/></p>
+		</div>
+    
+    	<!-- 主体 -->
+        <div class="job-post-details-area pt-100 pb-100" style="padding-top: 0px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="contact-wrapper">
+                           
+                            <div class="contact-form mt-2">
+                                <div class="section-title inner-section" style="text-align: center;margin-top: 30px;">
+                                    <h3>申请信息填写</h3>
+                                </div>
+                                <form  id="addinfoform" name="addinfoform" method="post" enctype="multipart/form-data">
+                                    <!-- 2019.11.08 周五  新增 开始-->
+                                   	<input type="hidden" name="cId" id="cId" th:value="${cid}"/>
+                                   	<input type="hidden" name="jobId" id="jobId" th:value="${jobid}"/>
+                                    <!-- 2019.11.08 周五  新增 结束开始-->
+                                    <input type="text" placeholder="姓名" name="name" id="name" style="width:33%;float:left;"/>
+                                    <input type="text" placeholder="年龄" name="age" id="age" style="width:33%;float:left;margin-left:2px;"/>
+                                    <div  style="margin:5px 0px;padding-left:0px;padding-right:2px;width:32%;float:left;margin-left:2px;">
+	                                    <select class="custom-multi-select" id="sex" name="sex" style="margin:-2;">
+										<option value="" selected>性别</option>
+										   <option value="0">男</option>
+										   <option value="1">女</option> 
+										</select>
+									</div>
+									<input type="text" name="school" id="school" placeholder="学校" style="width:49%;"/>
+									<input type="text" name="major" id="major" placeholder="专业"  style="width:49%;"/>
+									<input type="text" name="phone" id="phone" placeholder="手机号"  style="width:49%;"/>
+									<input type="text" name="email" id="email" placeholder="邮箱" style="width:49%;"/>
+									<!-- 省市县区 -->
+									<div  style="margin:5px 0px;padding-left:0px;padding-right:2px;margin-right:0px;float:left;width:33%;" >
+										<select class="custom-multi-select" name="province" th:onchange="getLevel2(this);" id="level1" >
+										   <option selected>省份</option>
+										   <option th:each="mkt:${level1}"  
+						        				   th:text="${mkt!=null?mkt.name:''}" 
+						        				   th:selected="${mkt.id+'' eq province}"
+						        				   th:value="${mkt!=null?mkt.id:''}"
+											>省份</option>
+										</select>
+									</div>
+									<div  style="margin:5px 0px;padding-left:0px;padding-right:2px;margin-right:0px;float:left;width:33%;" >
+										<select class="custom-multi-select" name="city" th:onchange="getLevel3(this);" id="level2" >
+										   <option selected>城市</option>
+										</select>
+									</div>
+									<div  style="margin:5px 0px;padding-left:0px;padding-right:2px;margin-right:0px;float:left;width:33%;" >
+										<select class="custom-multi-select"  name="county" id="level3" >
+										   <option selected>区县</option>
+										</select>
+									</div>
+									
+									<!--<input type="text" placeholder="婚育" />-->
+									<div  style="margin:5px 0px;padding-left:0px;padding-right:2px;margin-right:0px;float:left;width:24.5%;" >
+										<select class="custom-multi-select" id="marriage" name="marriage" >
+										   <option value="" selected>婚姻情况</option>
+										   <option value="0">已婚</option>
+										   <option value="1">未婚</option> 
+										</select>
+									</div>
+									<div  style="margin:5px 0px;padding-left:0px;padding-right:2px;margin-right:0px;float:left;width:24.5%;" >
+										<select class="custom-multi-select" id="education" name="education"  >
+										   <option value="" selected>学历</option>
+										   <option value="5">高中以下</option>
+										   <option value="1">高中</option>
+										   <option value="2">大专</option>
+										   <option value="3">本科</option> 
+										   <option value="4">研究生以上</option> 
+										</select>
+									</div>
+									
+									<input type="text" name="nation" id="nation" placeholder="民族" style="width:24%;float:left;margin-right:5px;"/>
+                                    <input type="text" name="workingyears" id="workingyears" placeholder="工作年限" style="width:25%;float:left;"/>
+									
+									
+									
+									<div class="input-group"><!-- onclick="$('#upfile').click();" -->
+							           <input id='location' class="form-control" onclick="onClick();" placeholder="选择附件简历" >
+							           <label class="input-group-btn"><!--  -->
+							               <input type="button" id="i-check" value="浏览文件" class="btn btn-primary" onclick="onClick();">
+							           </label>
+							       </div>
+							        <input type="file" name="upfile" id='upfile' onchange="$('#location').val($('#upfile').val());" style="display: none">
+									 <span id="s1"></span><p id="p1"></p>
+                                    <button type="button" class="btn-c buttonfx curtainup" onclick="addInfo();">提交申请</button><!-- history.back(); javascrtpt:window.location.href='/';-->
+                                    <button type="button" class="btn-c buttonfx curtainup" id="" onclick="javascrtpt:history.back();">返回</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-4 col-md-5">
+                        <div class="right-sidebar">
+                           
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--footer-area-start -->
+      <footer style="margin-bottom: 0px;">
+         
+         <div class="footer-bottom-area clearfix">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="footer-bottom text-center">
+                        <p>Copyright &copy; 2019.Company HLS All rights reserved.</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </footer>
+      <!--footer-area-end -->
+      <!-- ==================== START PRELOADER HERE ===================================== -->
+      <div class="preloader" id="preloader">
+         <div class="lds-ripple">
+            <div></div>
+            <div></div>
+         </div>
+      </div>
+       <!-- ==================== END PRELOADER HERE ===================================== -->		
+      <!-- ====================ALL JS FILE HERE===================================== -->
+      <!-- jQuery -->
+	  <script src="js/modules/proper.js" th:src="@{/js/modules/proper.js}"></script>
+	  <script src="js/modules/jquery.waypoints.min.js" th:src="@{/js/modules/query.waypoints.min.js}"></script>
+	  <script src="js/modules/owl.carousel.min.js" th:src="@{/js/modules/owl.carousel.min.js}"></script>
+	  <script src="js/modules/magnific.min.js" th:src="@{/js/modules/magnific.min.js}"></script>
+	  <script src="js/modules/typing.min.js" th:src="@{/js/modules/typing.min.js}"></script>
+	  <script src="js/modules/select2.min.js" th:src="@{/js/modules/select2.min.js}"></script>
+	  <script src="js/modules/aos.min.js" th:src="@{/js/modules/aos.min.js}"></script>
+	  <script src="js/modules/slimmenu.min.js" th:src="@{/js/modules/slimmenu.min.js}"></script>
+	  <script src="js/app.js" th:src="@{/js/app.js}"></script> 
+	  
+   </body>
+</html>
+
